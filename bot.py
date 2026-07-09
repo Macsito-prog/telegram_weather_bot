@@ -20,7 +20,12 @@ logger = logging.getLogger(__name__)
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     """send a message when the command /start is issued"""
     user = update.effective_user
-    await update.message.reply_html(rf"Hi {user.mention_html()}!")
+    await update.message.reply_html(f"Hola <b>{user.mention_html()}</b>! \n"
+                                    "Soy el bot del clima. Para comenzar, solo escribe /ciudad [nombreCiudad] para guardar tu ciudad y luego escribe /clima para saber el clima de tu ciudad. \n"
+                                    "Si quieres cambiar tu ciudad, solo escribe /ciudad [nombreCiudad] nuevamente.\n"
+                                    "Ej: /ciudad Santiago \n"
+                                    "\n"
+                                    "Saludos!")
 
 
 async def clima(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
@@ -41,7 +46,7 @@ async def ciudad(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     if not context.args:
         await update.message.reply_text("Uso: /ciudad NombreCiudad")
         return
-    city_name = context.args[0]
+    city_name = " ".join((context.args))
     save_config(city_name)
     await update.message.reply_text(f"Ciudad guardada: {city_name}")
 
